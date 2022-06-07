@@ -6,8 +6,10 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+let pathToWorkDir = homedir();
+
 function startManager(args = process.argv) {
-    console.log(homedir());
+
     if (args.length < 3) {
         console.log('Please enter user name (--username=your_name)');
         rl.close();
@@ -17,12 +19,12 @@ function startManager(args = process.argv) {
     let [userKey, userName] = userInfo;
 
     process.openStdin().on("keypress", (chunk, key) => {
-        if(key && key.name === "c" && key.ctrl) {
-          process.exit(userName);
+        if (key && key.name === "c" && key.ctrl) {
+            process.exit(userName);
         }
-      });
+    });
     process.on('exit', (name) => {
-        console.info(`Thank you for using File Manager, ${name}!`);
+        console.info(`Thank you for using File Manager, ${name}!\n`);
         rl.close();
     })
 
@@ -32,15 +34,14 @@ function startManager(args = process.argv) {
     } else {
         console.log('Please enter user name (--username=your_name)');
     }
-
-    rl.on('line', (input) => {
+    rl.question(`You are currently in + ${pathToWorkDir}, please enter your command \n`,
+     async (input) => {
         const [operation, ...path] = input.split(' ');
-
         switch (operation) {
             case '.exit': {
                 process.exit(userName);
             }
         }
-    });
+    })
 }
 startManager();
