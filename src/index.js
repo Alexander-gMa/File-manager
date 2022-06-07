@@ -1,4 +1,3 @@
-import * as path from "path";
 import readline from 'readline';
 import { homedir } from 'os';
 
@@ -11,35 +10,41 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-process.openStdin().on("keypress", (chunk, key) => {
-    if (key && key.name === "c" && key.ctrl) {
-        process.exit(userName);
-    }
-});
-process.on('exit', (name) => {
-    console.info(`Thank you for using File Manager, ${name}!\n`);
-    rl.close();
-})
-
 let __dirname = homedir();
 
+
 function startManager(args = process.argv) {
+
     if (args.length < 3) {
         console.log('Please enter user name (--username=your_name)');
         rl.close();
         return;
     }
+
     const userInfo = args[2].split('=');
     let [userKey, nameInfo] = userInfo;
     userName = nameInfo;
 
     if (userKey.startsWith('--')) userKey = userKey.slice(2);
-    if (userKey === 'username') {
+    if (userKey === 'username'|| userKey === 'userName') {
         console.log(`Welcome to the File Manager, ${userName}!`);
+        questions();
     } else {
         console.log('Please enter user name (--username=your_name)');
+        rl.close();
+        return;
     }
-    questions();
+
+    process.on('exit', (name) => {
+        console.info(`Thank you for using File Manager, ${name}!\n`);
+        rl.close();
+    })
+    
+    process.openStdin().on("keypress", (chunk, key) => {
+        if (key && key.name === "c" && key.ctrl) {
+            process.exit(userName);
+        }
+    });
 }
 
 function questions() {
