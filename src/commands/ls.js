@@ -3,7 +3,7 @@ import path from 'path';
 
 let isFile;
 
-async function ls(pathToDir) {
+export async function ls(pathToDir) {
     try {
         const readDir = await fs.readdir(path.join(pathToDir));
         console.log(readDir);
@@ -13,5 +13,3 @@ async function ls(pathToDir) {
         console.log(`Operation failed \nThere is a ${isFile}`);
     }
 }
-
-export default ls;

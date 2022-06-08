@@ -1,7 +1,7 @@
 import path from 'path';
 import { access } from 'fs/promises';
 
-async function cd(currentDir, pathToDir) {
+export async function cd(currentDir, pathToDir) {
     let newPathtoDir = path.join(currentDir, pathToDir);
     try {
         await access(newPathtoDir);
@@ -12,4 +12,3 @@ async function cd(currentDir, pathToDir) {
     }
 };
 
-export default cd;
