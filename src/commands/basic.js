@@ -12,8 +12,21 @@ export const cat = async (currentPath, pathToFile) => {
 
 export const add = async (currentPath, fileName) => {
     try {
-        await fs.writeFile(path.join(currentPath, fileName),'',{ flag: 'wx' });
+        await fs.writeFile(path.join(currentPath, fileName), '', { flag: 'wx' });
         console.log(`${fileName} is created`);
+    } catch (error) {
+        console.log('Operation failed');
+    }
+};
+
+export const rename = async (currentPath, fileName, newfilename) => {
+    console.log(path.join(currentPath, fileName).split('\\'));
+    try {
+        await fs.rename(
+            path.join(currentPath, fileName),
+            path.join(currentPath, newfilename)
+            )
+        console.log(`Operation done`);
     } catch (error) {
         console.log('Operation failed');
     }

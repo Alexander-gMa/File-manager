@@ -1,9 +1,7 @@
 import readline from 'readline';
 import { homedir } from 'os';
 
-import up from './commands/up.js'
-import cd from './commands/cd.js'
-import ls from './commands/ls.js'
+import * as nwd from './commands/nwd.js'
 import * as basic_operation from './commands/basic.js'
 
 let userName;
@@ -54,30 +52,40 @@ function questions() {
     rl.question(`\nYou are currently in + ${__dirname}, please enter your command \n`,
         async (input) => {
             const [operation, ...path] = input.split(' ');
-            const correctPath = path.filter(el => el !== '' && el !== ' ').join(' ');
+            const correctPath = path.filter(el => el !== '' && el !== ' ');
+
             switch (operation) {
                 case '.exit': {
                     process.exit(userName);
+                    
+                };
+                case 'rn': {
+                    await basic_operation.rename(__dirname, correctPath[0], correctPath[1]);
+                    break;
+                };
+                case 'up': {
+                    __dirname = await nwd.up(__dirname);
+                    break;
+                };
+                case 'cd': {
+                    __dirname = await nwd.cd(__dirname, correctPath.join(' '));
+                    break;
+                };
+                case 'ls': {
+                    await nwd.ls(__dirname);
+                    break;
+                };
+                case 'cat': {
+                    await basic_operation.cat(__dirname, correctPath.join(' '));
+                    break;
+                };
+                case 'add': {
+                    await basic_operation.add(__dirname, correctPath.join(' '));
+                    break;
+                };
+                default: {
+                    console.log('Invalid input')
                 }
-            }
-            try {
-                if (operation === '.up' || operation === 'up') {
-                    __dirname = await up(__dirname);
-                }
-                if (operation === '.cd' || operation === 'cd') {
-                    __dirname = await cd(__dirname, correctPath);
-                }
-                if (operation === '.ls' || operation === 'ls') {
-                    await ls(__dirname);
-                }
-                if (operation === '.cat' || operation === 'cat') {
-                    await basic_operation.cat(__dirname, correctPath);
-                }
-                if (operation === '.add' || operation === 'add') {
-                    await basic_operation.add(__dirname, correctPath);
-                }
-            } catch (err) {
-                console.log(err);
             }
             questions()
         })
