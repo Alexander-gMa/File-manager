@@ -20,12 +20,13 @@ export const add = async (currentPath, fileName) => {
 };
 
 export const rename = async (currentPath, fileName, newfilename) => {
-    console.log(path.join(currentPath, fileName).split('\\'));
+    const pathToFolder = path.join(currentPath, fileName).split('\\');
+    pathToFolder.splice(-1, 1);
     try {
         await fs.rename(
             path.join(currentPath, fileName),
-            path.join(currentPath, newfilename)
-            )
+            path.join(pathToFolder.join('\\'), newfilename)
+        )
         console.log(`Operation done`);
     } catch (error) {
         console.log('Operation failed');
