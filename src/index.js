@@ -3,6 +3,7 @@ import { homedir } from 'os';
 
 import up from './commands/up.js'
 import cd from './commands/cd.js'
+import ls from './commands/ls.js'
 
 let userName;
 
@@ -12,7 +13,6 @@ const rl = readline.createInterface({
 });
 
 let __dirname = homedir();
-
 
 function startManager(args = process.argv) {
 
@@ -63,7 +63,11 @@ function questions() {
                     __dirname = await up(__dirname);
                 }
                 if (operation === '.cd' || operation === 'cd') {
-                    __dirname = await cd(__dirname, path[0]);
+                    const correctPath = path.filter(el => el !== '' && el !== ' ')[0];
+                    __dirname = await cd(__dirname, correctPath);
+                }
+                if (operation === '.ls' || operation === 'ls') {
+                    await ls(__dirname);
                 }
             } catch (err) {
                 console.log(err);
