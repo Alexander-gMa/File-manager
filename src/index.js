@@ -2,6 +2,7 @@ import readline from 'readline';
 import { homedir } from 'os';
 
 import up from './commands/up.js'
+import cd from './commands/cd.js'
 
 let userName;
 
@@ -26,7 +27,7 @@ function startManager(args = process.argv) {
     userName = nameInfo;
 
     if (userKey.startsWith('--')) userKey = userKey.slice(2);
-    if (userKey === 'username'|| userKey === 'userName') {
+    if (userKey === 'username' || userKey === 'userName') {
         console.log(`Welcome to the File Manager, ${userName}!`);
         questions();
     } else {
@@ -36,10 +37,10 @@ function startManager(args = process.argv) {
     }
 
     process.on('exit', (name) => {
-        console.info(`Thank you for using File Manager, ${name}!\n`);
+        console.info(`\nThank you for using File Manager, ${name}!\n`);
         rl.close();
     })
-    
+
     process.openStdin().on("keypress", (chunk, key) => {
         if (key && key.name === "c" && key.ctrl) {
             process.exit(userName);
@@ -48,7 +49,8 @@ function startManager(args = process.argv) {
 }
 
 function questions() {
-    rl.question(`You are currently in + ${__dirname}, please enter your command \n`,
+
+    rl.question(`\nYou are currently in + ${__dirname}, please enter your command \n`,
         async (input) => {
             const [operation, ...path] = input.split(' ');
             switch (operation) {
@@ -57,8 +59,11 @@ function questions() {
                 }
             }
             try {
-                if (operation === '.up' || operation === 'up'){
+                if (operation === '.up' || operation === 'up') {
                     __dirname = await up(__dirname);
+                }
+                if (operation === '.cd' || operation === 'cd') {
+                    __dirname = await cd(__dirname, path[0]);
                 }
             } catch (err) {
                 console.log(err);
