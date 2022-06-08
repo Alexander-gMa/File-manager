@@ -4,6 +4,7 @@ import { homedir } from 'os';
 import up from './commands/up.js'
 import cd from './commands/cd.js'
 import ls from './commands/ls.js'
+import * as basic_operation from './commands/basic.js'
 
 let userName;
 
@@ -53,6 +54,7 @@ function questions() {
     rl.question(`\nYou are currently in + ${__dirname}, please enter your command \n`,
         async (input) => {
             const [operation, ...path] = input.split(' ');
+            const correctPath = path.filter(el => el !== '' && el !== ' ').join(' ');
             switch (operation) {
                 case '.exit': {
                     process.exit(userName);
@@ -63,11 +65,13 @@ function questions() {
                     __dirname = await up(__dirname);
                 }
                 if (operation === '.cd' || operation === 'cd') {
-                    const correctPath = path.filter(el => el !== '' && el !== ' ')[0];
                     __dirname = await cd(__dirname, correctPath);
                 }
                 if (operation === '.ls' || operation === 'ls') {
                     await ls(__dirname);
+                }
+                if (operation === '.cat' || operation === 'cat') {
+                    await basic_operation.cat(__dirname, correctPath);
                 }
             } catch (err) {
                 console.log(err);
