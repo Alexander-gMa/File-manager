@@ -10,18 +10,11 @@ export const cat = async (currentPath, pathToFile) => {
     }
 }
 
-
-// export async function cat(currentPath, pathToFile) {
-
-//     let readableStream = fs.createReadStream(
-//         path.join(currentPath, pathToFile),
-//         { flags: 'r', encoding: 'UTF-8', },
-//     );
-
-//     readableStream.on("data", chunk => {
-//         console.log(`File content : \n${chunk}`);
-//     });
-//     readableStream.on("error", () => {
-//         console.log('Operation failed');
-//     });
-// }
+export const add = async (currentPath, fileName) => {
+    try {
+        await fs.writeFile(path.join(currentPath, fileName),'',{ flag: 'wx' });
+        console.log(`${fileName} is created`);
+    } catch (error) {
+        console.log('Operation failed');
+    }
+};

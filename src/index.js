@@ -73,6 +73,9 @@ function questions() {
                 if (operation === '.cat' || operation === 'cat') {
                     await basic_operation.cat(__dirname, correctPath);
                 }
+                if (operation === '.add' || operation === 'add') {
+                    await basic_operation.add(__dirname, correctPath);
+                }
             } catch (err) {
                 console.log(err);
             }
