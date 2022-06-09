@@ -16,7 +16,14 @@ export const osInfo = async (type) => {
             console.log(`architecture: ${os.arch()}`)
             break;
         }
-        default:{
+        case 'EOL': {
+            console.log(`EOL: ${JSON.stringify(os.EOL)}\n`
+            + "EOL varies from os to os" + os.EOL
+            + "For windows it is \\r\\n" + os.EOL
+            + "For POSIX it is \\n" + os.EOL);
+            break;
+        }
+        default: {
             console.log('Invalid input');
         }
     }
