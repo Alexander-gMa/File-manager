@@ -7,6 +7,9 @@ export const osInfo = async (type) => {
         case 'homedir': {
             console.log(`homedir: ${os.homedir()}`)
         }
+        case 'username': {
+            console.log(`homedir: ${os.homedir()}`)
+        }
         default:{
             console.log('Invalid input');
         }
