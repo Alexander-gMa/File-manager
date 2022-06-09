@@ -35,12 +35,23 @@ export const rename = async (currentPath, fileName, newfilename) => {
 };
 
 export const cp = async (currentPath, pathToFile, pathToNewDir) => {
+    let testPath;
+    let finallyPath;
     const pathToFolder = path.join(currentPath, pathToFile).split('\\');
     const filename = pathToFolder.slice(-1);
+    if (pathToFile.startsWith('C:\\') || pathToFile.startsWith('\\') || pathToFile.startsWith('D:\\')) {
+        testPath = path.join(pathToFile);
+        finallyPath = path.join(pathToNewDir, filename[0]);
+    } else {
+        testPath = path.join(currentPath, pathToFile);
+        finallyPath = path.join(currentPath, pathToNewDir,filename[0] )
+    }
+
     try {
-        await fs.copyFile(pathToFile,
-            path.join(pathToNewDir, filename[0]),
+        await fs.copyFile(testPath,
+            path.join(finallyPath),
             constants.COPYFILE_EXCL);
+            console.log('File is copied');
     } catch (err) {
         err.code === 'EEXIST' ?
             console.log('Operation failed\nFile already exists') :
