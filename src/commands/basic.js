@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from 'path';
+import * as constants from "constants";
 
 export const cat = async (currentPath, pathToFile) => {
     try {
@@ -30,5 +31,19 @@ export const rename = async (currentPath, fileName, newfilename) => {
         console.log(`Operation done`);
     } catch (error) {
         console.log('Operation failed');
+    }
+};
+
+export const cp = async (currentPath, pathToFile, pathToNewDir) => {
+    const pathToFolder = path.join(currentPath, pathToFile).split('\\');
+    const filename = pathToFolder.slice(-1);
+    try {
+        await fs.copyFile(pathToFile,
+            path.join(pathToNewDir, filename[0]),
+            constants.COPYFILE_EXCL);
+    } catch (err) {
+        err.code === 'EEXIST' ?
+            console.log('Operation failed\nFile already exists') :
+            console.log('Operation failed');
     }
 };

@@ -83,6 +83,10 @@ function questions() {
                     await basic_operation.add(__dirname, correctPath.join(' '));
                     break;
                 };
+                case 'cp': {
+                    await basic_operation.cp(__dirname, correctPath[0], correctPath[1]);
+                    break;
+                };
                 default: {
                     console.log('Invalid input')
                 }
