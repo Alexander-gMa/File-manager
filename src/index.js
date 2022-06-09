@@ -50,13 +50,14 @@ function startManager(args = process.argv) {
 
 function questions() {
 
-    rl.question(`\nYou are currently in + ${__dirname}, please enter your command \n`,
+    rl.question(`\nYou are currently in + ${__dirname}, please enter your command \n\n`,
         async (input) => {
             const [operation, ...path] = input.split(' ');
             const correctPath = path.filter(el => el !== '' && el !== ' ');
 
             switch (operation) {
-                case '.exit': {
+                case '.exit':
+                case 'exit': {
                     process.exit(userName);
 
                 };

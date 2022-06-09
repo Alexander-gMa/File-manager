@@ -12,6 +12,10 @@ export const osInfo = async (type) => {
             console.log(`username: ${os.userInfo().username}`)
             break;
         }
+        case 'architecture': {
+            console.log(`architecture: ${os.arch()}`)
+            break;
+        }
         default:{
             console.log('Invalid input');
         }
