@@ -3,6 +3,7 @@ import { homedir } from 'os';
 
 import * as nwd from './commands/nwd.js'
 import * as basic_operation from './commands/basic.js'
+import { osInfo } from './commands/os/index.js'
 
 let userName;
 
@@ -57,7 +58,7 @@ function questions() {
             switch (operation) {
                 case '.exit': {
                     process.exit(userName);
-                    
+
                 };
                 case 'rn': {
                     await basic_operation.rename(__dirname, correctPath[0], correctPath[1]);
@@ -95,8 +96,12 @@ function questions() {
                     await basic_operation.mv(__dirname, correctPath[0], correctPath[1]);
                     break;
                 };
+                case 'os': {
+                    await osInfo(correctPath[0])
+                    break;
+                }
                 default: {
-                    console.log('Invalid input')
+                    console.log('Invalid input');
                 }
             }
             questions()
