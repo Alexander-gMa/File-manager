@@ -70,3 +70,7 @@ export const remove = async (currentPath, pathToFile) => {
         console.log('Operation failed');
     }
 };
+
+export const mv = async (currentPath, pathToFile, pathToNewDir) => {
+    cp(currentPath, pathToFile, pathToNewDir).then(() => remove(currentPath, pathToFile))
+};

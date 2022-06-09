@@ -91,6 +91,10 @@ function questions() {
                     await basic_operation.remove(__dirname, correctPath[0]);
                     break;
                 };
+                case 'mv': {
+                    await basic_operation.mv(__dirname, correctPath[0], correctPath[1]);
+                    break;
+                };
                 default: {
                     console.log('Invalid input')
                 }
