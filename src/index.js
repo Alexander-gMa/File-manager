@@ -87,6 +87,10 @@ function questions() {
                     await basic_operation.cp(__dirname, correctPath[0], correctPath[1]);
                     break;
                 };
+                case 'rm': {
+                    await basic_operation.remove(__dirname, correctPath[0]);
+                    break;
+                };
                 default: {
                     console.log('Invalid input')
                 }

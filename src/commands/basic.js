@@ -44,17 +44,29 @@ export const cp = async (currentPath, pathToFile, pathToNewDir) => {
         finallyPath = path.join(pathToNewDir, filename[0]);
     } else {
         testPath = path.join(currentPath, pathToFile);
-        finallyPath = path.join(currentPath, pathToNewDir,filename[0] )
+        finallyPath = path.join(currentPath, pathToNewDir, filename[0])
     }
-
     try {
         await fs.copyFile(testPath,
             path.join(finallyPath),
             constants.COPYFILE_EXCL);
-            console.log('File is copied');
+        console.log('File is copied');
     } catch (err) {
         err.code === 'EEXIST' ?
             console.log('Operation failed\nFile already exists') :
             console.log('Operation failed');
+    }
+};
+
+export const remove = async (currentPath, pathToFile) => {
+    let pathToRmFile;
+    (pathToFile.startsWith('C:\\') || pathToFile.startsWith('\\') || pathToFile.startsWith('D:\\')) ?
+        pathToRmFile = pathToFile :
+        pathToRmFile = path.join(currentPath, pathToFile);
+    try {
+        await fs.unlink(pathToRmFile);
+        console.log('File was deleted');
+    } catch (error) {
+        console.log('Operation failed');
     }
 };
