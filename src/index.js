@@ -4,6 +4,7 @@ import { homedir } from 'os';
 import * as nwd from './commands/nwd.js'
 import * as basic_operation from './commands/basic.js'
 import { osInfo } from './commands/os/index.js'
+import { calculateHash } from './commands/hash/index.js'
 
 let userName;
 
@@ -98,7 +99,11 @@ function questions() {
                     break;
                 };
                 case 'os': {
-                    await osInfo(correctPath[0])
+                    await osInfo(correctPath[0]);
+                    break;
+                }
+                case 'hash': {
+                    await calculateHash(__dirname, correctPath[0]);
                     break;
                 }
                 default: {
