@@ -6,9 +6,11 @@ export const osInfo = async (type) => {
     switch (command) {
         case 'homedir': {
             console.log(`homedir: ${os.homedir()}`)
+            break;
         }
         case 'username': {
-            console.log(`homedir: ${os.homedir()}`)
+            console.log(`username: ${os.userInfo().username}`)
+            break;
         }
         default:{
             console.log('Invalid input');
