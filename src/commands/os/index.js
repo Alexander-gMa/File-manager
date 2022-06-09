@@ -18,9 +18,13 @@ export const osInfo = async (type) => {
         }
         case 'EOL': {
             console.log(`EOL: ${JSON.stringify(os.EOL)}\n`
-            + "EOL varies from os to os" + os.EOL
-            + "For windows it is \\r\\n" + os.EOL
-            + "For POSIX it is \\n" + os.EOL);
+                + "EOL varies from os to os" + os.EOL
+                + "For windows it is \\r\\n" + os.EOL
+                + "For POSIX it is \\n" + os.EOL);
+            break;
+        }
+        case 'cpus': {
+            console.log(os.cpus())
             break;
         }
         default: {
