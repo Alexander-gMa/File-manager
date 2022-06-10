@@ -5,6 +5,7 @@ import * as nwd from './commands/nwd.js'
 import * as basic_operation from './commands/basic.js'
 import { osInfo } from './commands/os/index.js'
 import { calculateHash } from './commands/hash/index.js'
+import { archive } from './commands/zlib/zlib.js'
 
 let userName;
 
@@ -104,6 +105,14 @@ function questions() {
                 }
                 case 'hash': {
                     await calculateHash(__dirname, correctPath[0]);
+                    break;
+                }
+                case 'compress': {
+                    await archive('compress', __dirname, correctPath[0], correctPath[1]);
+                    break;
+                }
+                case 'decompress': {
+                    await archive('decompress', __dirname, correctPath[0], correctPath[1]);
                     break;
                 }
                 default: {
