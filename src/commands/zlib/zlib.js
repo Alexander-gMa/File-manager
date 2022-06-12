@@ -22,12 +22,9 @@ export const archive = async (command, currentPath, pathToFile, pathToDestinatio
 
     try {
         const readStream = fs.createReadStream(correctPathToFile, { flags: 'r' });
-        readStream.on('error', () => { throw new Error })
 
         const writeStream = fs.createWriteStream(correctPathToDest, { flags: 'wx' });
-        writeStream.on('error', () => {
-            { throw new Error }
-        })
+
         command === 'compress' ? await pipe(readStream, zlib.createBrotliCompress(), writeStream) :
             await pipe(readStream, zlib.createBrotliDecompress(), writeStream);
         console.log(`${command} is done`);
