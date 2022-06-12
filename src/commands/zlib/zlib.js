@@ -19,16 +19,17 @@ export const archive = async (command, currentPath, pathToFile, pathToDestinatio
         correctPathToDest = pathToDestination :
         correctPathToDest = path.join(currentPath, pathToDestination);
 
-    const readStream = fs.createReadStream(correctPathToFile, { flags: 'r' });
-    readStream.on('error', () => console.log('Operation failed\n'))
 
-    const writeStream = fs.createWriteStream(correctPathToDest, { flags: 'wx' });
-    writeStream.on('error', () => {
-        console.log('Operation failed\n')
-    })
     try {
+        const readStream = fs.createReadStream(correctPathToFile, { flags: 'r' });
+        readStream.on('error', () => { throw new Error })
+
+        const writeStream = fs.createWriteStream(correctPathToDest, { flags: 'wx' });
+        writeStream.on('error', () => {
+            { throw new Error }
+        })
         command === 'compress' ? await pipe(readStream, zlib.createBrotliCompress(), writeStream) :
-        await pipe(readStream, zlib.createBrotliDecompress(), writeStream);
+            await pipe(readStream, zlib.createBrotliDecompress(), writeStream);
         console.log(`${command} is done`);
     } catch (error) {
         console.log('Operation failed');
