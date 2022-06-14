@@ -73,12 +73,14 @@ List of operations and their syntax:
     - Compress file (using Brotli algorithm)  
     ```bash
     compress path_to_file path_to_destination
+    
     пример использования:
     compress abc123.txt abc124.gz
     ```
     - Decompress file (using Brotli algorithm)  
     ```bash
     decompress path_to_file path_to_destination
+    
     пример использования:
     compress abc124.gz abc123.txt 
     ```
